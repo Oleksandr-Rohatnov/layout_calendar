@@ -1,3 +1,109 @@
+$base-font-size: 30px;
+$cell-size: 100px;
+$cell-gap: 1px;
+$callendar-width: $cell-gap + 7 * ($cell-size + $cell-gap);
+$cell-color: #eee;
+$cell-hover-color: #ffc0cb;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, sans-serif;
+  font-size: $base-font-size;
+}
+
 body {
   margin: 0;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.calendar {
+  display: inherit;
+  flex-flow: row wrap;
+  width: $callendar-width;
+  padding-left: $cell-gap;
+
+  &__cell {
+    position: relative;
+    max-width: $cell-size;
+    width: 100%;
+    height: $cell-size;
+    border: 1px solid;
+    background-color: $cell-color;
+    margin-right: $cell-gap;
+    margin-bottom: $cell-gap;
+    transition: 0.5s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $cell-hover-color;
+      transform: translate(0, -20px);
+    }
+
+    &::after {
+      content: "";
+      display: inherit;
+      text-align: center;
+      line-height: $cell-size;
+    }
+  
+    @for $i from 1 through 31 {
+      &:nth-child(#{$i})::after {
+        content: "#{$i}";
+      }
+    }
+  }
+}
+
+$week-days: (
+  "mon" : 0,
+  "tue" : 1,
+  "wed" : 2,
+  "thu" : 3,
+  "fri" : 4,
+  "sat" : 5,
+  "sun" : 6
+);
+
+@each $week-day, $week-day-number in $week-days {
+  .calendar-#{$week-day} {
+    .calendar__cell:first-child {
+      margin-left: $week-day-number * ($cell-size + $cell-gap);
+    }
+  }
+}
+
+.calendar-28 {
+  .calendar__cell:nth-child(29),
+  .calendar__cell:nth-child(30),
+  .calendar__cell:nth-child(31) {
+    display: none;
+  }
+}
+
+.calendar-29 {
+  .calendar__cell:nth-child(30),
+  .calendar__cell:nth-child(31) {
+    display: none;
+  }
+}
+
+.calendar-30 {
+  .calendar__cell:nth-child(31) {
+    display: none;
+  }
+}
+
+.calendar-31 {
+  .calendar__cell:nth-child(n) {
+    display: inline-block;
+  }
 }
