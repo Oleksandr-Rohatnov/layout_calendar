@@ -9,13 +9,10 @@ $cell-hover-color: #ffc0cb;
   box-sizing: border-box;
 }
 
-html {
-  font-family: Arial, sans-serif;
-  font-size: $base-font-size;
-}
-
 body {
   margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: $base-font-size;
 }
 
 .main {
@@ -81,29 +78,10 @@ $week-days: (
   }
 }
 
-.calendar-28 {
-  .calendar__cell:nth-child(29),
-  .calendar__cell:nth-child(30),
-  .calendar__cell:nth-child(31) {
-    display: none;
-  }
-}
-
-.calendar-29 {
-  .calendar__cell:nth-child(30),
-  .calendar__cell:nth-child(31) {
-    display: none;
-  }
-}
-
-.calendar-30 {
-  .calendar__cell:nth-child(31) {
-    display: none;
-  }
-}
-
-.calendar-31 {
-  .calendar__cell:nth-child(n) {
-    display: inline-block;
+@for $i from 28 through 31 {
+  .calendar-#{$i} {
+    .calendar__cell:nth-child(n+#{$i+1}){
+      display: none;
+    }
   }
 }
